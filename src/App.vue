@@ -1,10 +1,10 @@
 <template>
   <AppHeader />
   <div class="container">
-    <AppBalance :total="+total" />
-    <AppIncomeExpenses :income="+income" :expenses="+expenses" />
-    <AppTransactionList :transactions="transactions" @transactionDeleted="handleTransactionDeleted" />
-    <AppAddTransaction @transactionSubmitted="handleTransactionSubmitted" />
+    <AppBalance :total="total" />
+    <AppIncomeExpenses :income="income" :expenses="expenses" />
+    <AppTransactionList :transactions="transactions" @transaction-deleted="handleTransactionDeleted" />
+    <AppAddTransaction @transaction-submitted="handleTransactionSubmitted" />
   </div>
 </template>
 
@@ -43,7 +43,7 @@ const income = computed(() => {
     .filter((transaction) => transaction.amount > 0)
     .reduce((acc, transaction) => {
       return acc + transaction.amount;
-    }, 0).toFixed(2)
+    }, 0);
 });
 
 //Get expenses
@@ -52,7 +52,7 @@ const expenses = computed(() => {
     .filter((transaction) => transaction.amount < 0)
     .reduce((acc, transaction) => {
       return acc + transaction.amount;
-    }, 0).toFixed(2)
+    }, 0);
 });
 
 //Add transaction
@@ -70,7 +70,7 @@ const handleTransactionSubmitted = (transactionData) => {
 
 //Generate unique ID
 const generateUniqueId = () => {
-  return Math.floor(Math.random() * 1000000);
+  return Date.now();
 }
 
 //Delete transaction

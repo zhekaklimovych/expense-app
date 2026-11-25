@@ -12,7 +12,7 @@
 <script setup>
 const emit = defineEmits(['transactionDeleted']);
 
-const props = defineProps({
+defineProps({
     transactions:
     {
         type: Array,
@@ -23,5 +23,4 @@ const props = defineProps({
 const deleteTransaction = (id) => {
     emit('transactionDeleted', id);
 };
-
 </script>

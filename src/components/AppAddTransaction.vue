@@ -8,7 +8,7 @@
         <div class="form-control">
             <label for="amount">Amount <br />
                 (negative - expense, positive - income)</label>
-            <input type="text" id="amount" placeholder="Enter amount..." v-model="amount" />
+            <input type="number" step="0.01" id="amount" placeholder="Enter amount..." v-model="amount" />
         </div>
         <button class="btn">Add transaction</button>
     </form>
@@ -28,18 +28,24 @@ const emit = defineEmits([
 const toast = useToast();
 
 const onSubmit = () => {
-    if (!text.value || !amount.value) {
+    if (!text.value.trim() || amount.value === '') {
         toast.error("Both fields must be filled");
         return;
     }
 
+    const parsedAmount = parseFloat(amount.value);
+
+    if (isNaN(parsedAmount)) {
+        toast.error("Amount must be a number");
+        return;
+    }
+
     const transactionData = {
-        text: text.value,
-        amount: parseFloat(amount.value)
+        text: text.value.trim(),
+        amount: parsedAmount
     }
 
     emit('transactionSubmitted', transactionData);
-    console.log(text.value, amount.value);
     text.value = '';
     amount.value = '';
 }
