@@ -1,11 +1,19 @@
-<script setup></script>
+<script setup>
+import AddTransaction from './components/AddTransaction.vue';
+import Balance from './components/Balance.vue';
+import Header from './components/Header.vue';
+import IncomeExpenses from './components/IncomeExpenses.vue';
+import TransactionList from './components/TransactionList.vue';
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <Header />
+  <div class="container">
+    <Balance></Balance>
+    <IncomeExpenses></IncomeExpenses>
+    <TransactionList></TransactionList>
+    <AddTransaction></AddTransaction>
+  </div>
 </template>
 
 <style scoped></style>

@@ -37,3 +37,4 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+src/assets/in1dex.html
