@@ -16,16 +16,19 @@ import AppHeader from './components/AppHeader.vue';
 import AppIncomeExpenses from './components/AppIncomeExpenses.vue';
 import AppTransactionList from './components/AppTransactionList.vue';
 
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const toast = useToast();
 
-const transactions = ref([
-  { id: 1, text: 'Flower', amount: -20 },
-  { id: 2, text: 'Salary', amount: 300 },
-  { id: 3, text: 'Book', amount: -10 },
-  { id: 4, text: 'Camera', amount: 150 }
-]);
+const transactions = ref([]);
+
+//Check localStorage
+onMounted(() => {
+  const savedTransactions = JSON.parse(localStorage.getItem('transactions'));
+  if (savedTransactions) {
+    transactions.value = savedTransactions;
+  }
+})
 
 //Get total
 const total = computed(() => {
@@ -59,6 +62,9 @@ const handleTransactionSubmitted = (transactionData) => {
     text: transactionData.text,
     amount: transactionData.amount
   });
+
+  saveTransactionsToLocalStorage();
+
   toast.success('Transaction added');
 }
 
@@ -71,10 +77,17 @@ const generateUniqueId = () => {
 const handleTransactionDeleted = (id) => {
   transactions.value = transactions.value.filter((transaction) => {
     return transaction.id !== id;
-  })
+  });
+
+  saveTransactionsToLocalStorage();
+
   toast.success('Transaction deleted');
 }
-</script>
 
+//Save to localStorage
+const saveTransactionsToLocalStorage = () => {
+  localStorage.setItem('transactions', JSON.stringify(transactions.value));
+}
+</script>
 
 <style scoped></style>
